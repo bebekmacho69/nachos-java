@@ -213,18 +213,18 @@ public class KThread {
      * restores interrupts to the previous state, in case <tt>yield()</tt> was
      * called with interrupts disabled.
      */
-    public static void yield2() {
-		Lib.debug(dbgThread, "Yielding thread: " + currentThread.toString());
-		
-		Lib.assertTrue(currentThread.status == statusRunning);
-		
-		boolean intStatus = Machine.interrupt().disable();
+    public static void yield() {
+	Lib.debug(dbgThread, "Yielding thread: " + currentThread.toString());
 	
-		currentThread.ready();
+	Lib.assertTrue(currentThread.status == statusRunning);
 	
-		runNextThread();
-		
-		Machine.interrupt().restore(intStatus);
+	boolean intStatus = Machine.interrupt().disable();
+
+	currentThread.ready();
+
+	runNextThread();
+	
+	Machine.interrupt().restore(intStatus);
     }
 
     /**
@@ -292,12 +292,7 @@ public class KThread {
 	Lib.assertTrue(idleThread == null);
 	
 	idleThread = new KThread(new Runnable() {
-		public void run() {
-			while (true) {
-				yield2();
-			}
-		}
-//	    public void run() { while (true) yield(); }
+	    public void run() { while (true) yield(); }
 	});
 	idleThread.setName("idle");
 
@@ -395,7 +390,7 @@ public class KThread {
 	    for (int i=0; i<5; i++) {
 		System.out.println("*** thread " + which + " looped "
 				   + i + " times");
-		currentThread.yield2();
+		currentThread.yield();
 	    }
 	}
 

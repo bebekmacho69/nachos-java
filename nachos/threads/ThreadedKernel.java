@@ -59,7 +59,6 @@ public class ThreadedKernel extends Kernel {
      * nothing.
      */
     public void run() {
-    	
     }
 
     /**

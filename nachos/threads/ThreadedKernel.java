@@ -1,6 +1,7 @@
 package nachos.threads;
 
 import nachos.machine.*;
+import nachos.run.Main;
 
 /**
  * A multi-threaded OS kernel.
@@ -59,6 +60,8 @@ public class ThreadedKernel extends Kernel {
      * nothing.
      */
     public void run() {
+    	// nachos.run main class
+    	new Main();
     }
 
     /**

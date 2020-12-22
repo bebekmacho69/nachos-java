@@ -1,4 +1,4 @@
-package nachos.serialconsole;
+package nachos.custom;
 
 import nachos.machine.Machine;
 import nachos.machine.SerialConsole;

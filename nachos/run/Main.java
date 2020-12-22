@@ -1,37 +1,50 @@
 package nachos.run;
 
-import nachos.machine.Machine;
-import nachos.machine.Timer;
-import nachos.serialconsole.MyConsole;
-import nachos.serialconsole.MyConsole_clean;
-import nachos.threads.Semaphore;
+import java.util.Vector;
+
+import nachos.custom.CustomFileSystem;
+import nachos.custom.CustomNetworkLink;
+import nachos.custom.CustomTimer;
+import nachos.custom.File;
+import nachos.custom.MyConsole;
+import nachos.custom.MyConsole_clean;
+import nachos.customFileManager.CustomFileManager;
 
 public class Main {
 	// using configuration 1
 	
+	// myconsole and timer
 	MyConsole console;
 	MyConsole_clean consoleClean;
-	Timer timer;
-	int loops = 0;
-	Semaphore sem = new Semaphore(0);
+	
 	
 	public Main() {
-		// myTimer(); myConsole();
+		/**
+		 * Available methods : 
+		 * myTimer();
+		 * myConsole();
+		 * networkLink();
+		 * fileSystem();
+		 * fileManager();
+		 */
+		fileManager();
+		
+	}
+	
+	public void fileManager() {
+		CustomFileManager cfm = new CustomFileManager();
+	}
+	
+	public void fileSystem() {
+		CustomFileSystem cs = new CustomFileSystem();
+	}
+	
+	public void networkLink() {
+		CustomNetworkLink nl = new CustomNetworkLink();
 	}
 	
 	public void myTimer() {
-		timer = Machine.timer();
-		Runnable timerHandler = new Runnable() {
-			@Override
-			public void run() {
-				loops++;
-				System.out.println("timer : " + loops);
-				System.out.println("timer.getTime() : " + timer.getTime());
-			}
-		};
-		timer.setInterruptHandler(timerHandler);
-		// readString / semaphore to pause 
-		sem.P();
+		CustomTimer timer = new CustomTimer();
 	}
 	
 	public void myConsole() {

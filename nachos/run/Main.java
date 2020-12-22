@@ -1,15 +1,40 @@
 package nachos.run;
 
+import nachos.machine.Machine;
+import nachos.machine.Timer;
 import nachos.serialconsole.MyConsole;
 import nachos.serialconsole.MyConsole_clean;
+import nachos.threads.Semaphore;
 
 public class Main {
 	// using configuration 1
 	
-	MyConsole console = new MyConsole();
-	MyConsole_clean consoleClean = new MyConsole_clean();
+	MyConsole console;
+	MyConsole_clean consoleClean;
+	Timer timer;
+	int loops = 0;
+	Semaphore sem = new Semaphore(0);
 	
 	public Main() {
+		// myTimer(); myConsole();
+	}
+	
+	public void myTimer() {
+		timer = Machine.timer();
+		Runnable timerHandler = new Runnable() {
+			@Override
+			public void run() {
+				loops++;
+				System.out.println("timer : " + loops);
+				System.out.println("timer.getTime() : " + timer.getTime());
+			}
+		};
+		timer.setInterruptHandler(timerHandler);
+		// readString / semaphore to pause 
+		sem.P();
+	}
+	
+	public void myConsole() {
 		console = new MyConsole();
 		consoleClean = new MyConsole_clean();
 		while (true) {
